@@ -1,27 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 function Gallery({ tours, setTours }) {
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  useEffect(() => {    // useEffect is used to fetch the API and JSON
-    const fetchTours = async () => {
-      try {
-        const response = await fetch('https://api.allorigins.win/get?url=https://course-api.com/react-tours-project'); // Had to make alterations to link because it would pop an error before
-        if (!response.ok) {
-          throw new Error('Failed to fetch tours');
-        }
-        const data = await response.json();
-        setTours(data);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
+  const fetchTours = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      const response = await fetch('https://api.allorigins.win/get?url=https://course-api.com/react-tours-project');
+      if (!response.ok) {
+        throw new Error('Failed to fetch tours');
       }
-    };
-
-    fetchTours();
-  }, [setTours]);
+      const data = await response.json();
+      setTours(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleRemoveTour = (id) => {
     const newTours = tours.filter(tour => tour.id !== id);
@@ -35,17 +33,15 @@ function Gallery({ tours, setTours }) {
       )
     );
   };
-// these are the loading and error states 
-  if (loading) {
-    return <p>Loading...</p>;
-  }
-
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
 
   return (
     <div className="gallery">
+      <button onClick={fetchTours} disabled={loading}>
+        {loading ? 'Loading...' : 'Fetch Tours'}
+      </button>
+
+      {error && <p>Error: {error}</p>}
+
       {tours.map(tour => (
         <div key={tour.id} className="tour-card">
           <img src={tour.image} alt={tour.name} />
