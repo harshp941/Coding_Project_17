@@ -46,11 +46,11 @@ function Gallery({ tours, setTours }) {
         <div key={tour.id} className="tour-card">
           <img src={tour.image} alt={tour.name} />
           <h2>{tour.name}</h2>
-          <p>Price:${tour.price}</p>
+          <p>Price: ${tour.price}</p>
           <p>
             {tour.info}
             <button onClick={() => handleToggleDescription(tour.id)}>
-              {tour.showMore ? 'Show Less' : 'Read More'}
+              {tour.info ? 'Show Less' : 'Read More'}
             </button>
           </p>
           <button onClick={() => handleRemoveTour(tour.id)}>Not Interested</button>
