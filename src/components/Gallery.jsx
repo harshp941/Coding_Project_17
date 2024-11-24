@@ -48,9 +48,9 @@ function Gallery({ tours, setTours }) {
           <h2>{tour.name}</h2>
           <p>Price: ${tour.price}</p>
           <p>
-            {tour.info}
+          {tour.showMore ? tour.info : `${tour.info.substring(0, 100)}...`}
             <button onClick={() => handleToggleDescription(tour.id)}>
-              {tour.info ? 'Show Less' : 'Read More'}
+              {tour.showMore ? 'Show Less' : 'Read More'}
             </button>
           </p>
           <button onClick={() => handleRemoveTour(tour.id)}>Not Interested</button>
