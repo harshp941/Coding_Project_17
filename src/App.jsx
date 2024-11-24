@@ -3,7 +3,8 @@ import React, { useState } from 'react';
 import Gallery from './components/Gallery';
 import './App.css'
 
-function App() {
+// simple function for the app to work 
+function App() {          
   const [tours, setTours] = useState([]);
 
   return (
